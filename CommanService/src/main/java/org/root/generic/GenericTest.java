@@ -32,11 +32,12 @@ public class GenericTest {
 //    }
 
     public static void processAnimals(List<? extends Animal> animals) {
-//        animals.add(new Dog()); animals.add(new Animal()); // compile time error
+//        animals.add(new Dog()); animals.add(new Animal()); // compile time error because it is read-only
+        //it prevents us from modifying the list the exact subtype is unknown.
         animals.add(null);
         Animal getDog = animals.get(0);
         for (Animal animal : animals) {
-            animal.getType();
+            animal.getType();// This works fine because we are reading from the list
         }
 
     }
@@ -45,7 +46,7 @@ public class GenericTest {
 //    List<Animal> (since Animal is a superclass of Dog)
 //    List<Object> (since Object is the root superclass of all classes)
     public static void processParents(List<? super Dog> dogs) {
-       // dogs.add(new Animal());
+       // dogs.add(new Animal());// Compilation error: Only Dog or its subclasses allowed(preserving type safety while allowing modifications)
         dogs.add(new Dog());
         dogs.add(new BlackDog());
 
