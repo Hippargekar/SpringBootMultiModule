@@ -15,8 +15,6 @@ import java.util.concurrent.TimeUnit;
 //Managing network connections in a server
 public class SemaphoreTest {
 
-
-
     // Creating a semaphore with 3 permits
     private static final Semaphore semaphore = new Semaphore(2);
 

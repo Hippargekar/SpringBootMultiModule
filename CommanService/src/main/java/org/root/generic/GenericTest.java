@@ -31,6 +31,8 @@ public class GenericTest {
 //        processParents(animals);
 //    }
 
+
+//Class<? extends Exception>
     public static void processAnimals(List<? extends Animal> animals) {
 //        animals.add(new Dog()); animals.add(new Animal()); // compile time error because it is read-only
         //it prevents us from modifying the list the exact subtype is unknown.

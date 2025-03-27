@@ -1,6 +1,5 @@
 package org.root.runner;
 
-import org.root.dto.DepartmentDto;
 import org.root.dto.EmployeeDto;
 import org.root.service.EmployeeService;
 import org.springframework.boot.CommandLineRunner;
@@ -8,11 +7,11 @@ import org.springframework.stereotype.Component;
 import org.root.enums.Status;
 
 @Component
-public class CMDRunner implements CommandLineRunner {
+public class CmdRunner implements CommandLineRunner {
 
     private final EmployeeService employeeService;
 
-    public CMDRunner(EmployeeService employeeService) {
+    public CmdRunner(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 

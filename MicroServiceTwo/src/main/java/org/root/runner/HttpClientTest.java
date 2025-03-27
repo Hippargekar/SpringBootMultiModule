@@ -40,6 +40,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
 
+//https://www.czetsuyatech.com/2023/03/spring-mutual-tls-hands-on.html
 public class HttpClientTest {
 //<dependency>
 //    <groupId>com.fasterxml.jackson.datatype</groupId>

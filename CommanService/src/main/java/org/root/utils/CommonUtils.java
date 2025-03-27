@@ -1,5 +1,7 @@
 package org.root.utils;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.*;
 
 public class CommonUtils {
@@ -34,5 +36,11 @@ public class CommonUtils {
 
     public static LocalDateTime convertToLocalDateTime(ZonedDateTime zonedDateTime) {
         return zonedDateTime.toLocalDateTime();
+    }
+
+    public static String formatBigDecimal(BigDecimal value) {
+        if (value == null) return "";
+        DecimalFormat df = new DecimalFormat("#.##########"); // Adjust the pattern as needed
+        return df.format(value);
     }
 }
