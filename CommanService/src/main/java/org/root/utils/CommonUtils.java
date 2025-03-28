@@ -43,4 +43,34 @@ public class CommonUtils {
         DecimalFormat df = new DecimalFormat("#.##########"); // Adjust the pattern as needed
         return df.format(value);
     }
+
+    public static boolean checkDateBetween(LocalDate startDate, LocalDate endDate){
+        LocalDate todayDate =  LocalDate.now();
+        if( (todayDate.isAfter(startDate) && todayDate.isBefore(endDate)) || (todayDate.isEqual(startDate) || todayDate.isEqual(endDate)) )	{
+            return true;
+        }
+        return false;
+    }
+
+    //serviceCharge
+    public static BigDecimal getServiceCharge(BigDecimal txnAmount) {
+        final String GST_RATE = "0.9";
+        if (txnAmount.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal gstPercentage = new BigDecimal(GST_RATE);
+            return gstPercentage.divide(new BigDecimal(100)).multiply(txnAmount).setScale(2, BigDecimal.ROUND_HALF_UP);
+        }
+        return BigDecimal.ZERO;
+    }
+
+    public static String compareDecimal(BigDecimal b1, BigDecimal b2){
+        String comparison = "";
+        if (b1.compareTo(b2) == 0) {
+            comparison = "Equals";
+        } else if (b1.compareTo(b2) == 1) {
+            comparison = "b1 is greater than b2";
+        } else if (b1.compareTo(b2) == -1) {
+            comparison = "b1 is smaller than b2";
+        }
+        return comparison;
+    }
 }
