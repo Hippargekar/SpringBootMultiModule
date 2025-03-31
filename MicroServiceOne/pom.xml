@@ -39,12 +39,6 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.16.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.root</groupId>
             <artifactId>CommanService</artifactId>
 <!-- Notice that we don’t need version here as that has been defined in the parent pom. -->
