@@ -7,8 +7,16 @@ public abstract class StealingMethod {
 
     //the template method should be declared as final
     public final void steal() {
+        begin();
         var target = pickTarget();
         confuseTarget(target);
         stealTheItem(target);
+        end();
+    }
+    public void begin() {
+        System.out.println("**************************Begin*************************** ");
+    }
+    public void end() {
+        System.out.println("**************************End*************************** ");
     }
 }

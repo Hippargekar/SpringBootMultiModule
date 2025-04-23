@@ -3,7 +3,6 @@ package org.root.strm;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class StreamCodingTest {
 
@@ -36,6 +35,24 @@ public class StreamCodingTest {
 //        System.out.println(c);
 //    }
 
+    public static void main(String[] args) {
+        String str = "Hello World!";
+        str.chars().forEach(System.out::println);
+        char[] chars = str.toCharArray();
+        System.out.println("Character Array:");
+        for (char c : chars) {
+            System.out.print(c + " ");
+        }System.out.println();
+        System.out.println(Arrays.toString(chars));
+        chars[0] = 'G';
+        String modifiedStr = new String(chars);
+        System.out.println("\nModified String: " + modifiedStr);
+        char ch = (char) 98;
+        System.out.println(ch);
+        int asciiValue = (int) '!';
+        System.out.println(asciiValue);
+    }
+
 //    public static void main(String[] args) {
 //        Map<Integer, Long> collect = getData().stream().collect(Collectors.groupingBy(Employee::getDeptId, Collectors.counting()));
 ////        collect.entrySet().stream().forEach(entry-> System.out.println(entry.getKey() +"--"+entry.getValue()));
@@ -66,14 +83,17 @@ public class StreamCodingTest {
 //        sortedEmployeeDesc.entrySet().stream().forEach(entry-> System.out.println(entry));
 //    }
 
-//    public static void main(String[] args) {
-//        //Nth Highest salary. based on department wise
-//        int n = 2;
-//        Comparator<Employee> sortSalary = Comparator.comparingDouble(Employee::getSalary).reversed();
-//        getData().stream().collect(Collectors.groupingBy(Employee::getDeptId,
-//                Collectors.collectingAndThen(Collectors.toList(),
-//                        list -> list.stream().sorted(sortSalary).skip(n-1).findFirst())));
-//    }
+    public static void mainV4(String[] args) {//Print the list of employees with the second highest salary in each department
+        //Nth Highest salary. based on department wise
+        int n = 2;
+        Comparator<Employee> sortSalary = Comparator.comparingDouble(Employee::getSalary).reversed();
+        getData().stream().collect(Collectors.groupingBy(Employee::getDeptId,
+                Collectors.collectingAndThen(Collectors.toList(),
+                        list -> list.stream().sorted(sortSalary)
+                                .skip(n-1).findFirst())
+                )
+        );
+    }
 
 //    public static void main(String[] args) {
 //        Comparator<Employee> sortSalary = Comparator.comparingDouble(Employee::getSalary);
@@ -82,9 +102,67 @@ public class StreamCodingTest {
 //        )));
 //    }
 
-    public static void main(String[] args) {
-        Map<Integer, Double> collect = getData().stream().collect(Collectors.groupingBy(Employee::getDeptId, Collectors.averagingDouble(Employee::getSalary)));
+    public static void mainV1(String[] args) {
+        Map<Integer, Double> collect = getData().stream()
+                .collect(Collectors.groupingBy(Employee::getDeptId,
+                        Collectors.averagingDouble(Employee::getSalary)));
         System.out.println(collect);
+    }
+
+    public static void mainV2(String[] args) {
+         Map<Integer, List<String>> dat = getData().stream()
+                .collect(Collectors.groupingBy(Employee::getDeptId,
+                        Collectors.mapping(Employee::getName, Collectors.toList())));
+         dat.entrySet().forEach(entry-> System.out.println(entry.getKey() +"|"+entry.getValue()));
+    }
+
+    public static void mainV6(String[] args) {
+        Map<Integer,List<Employee>> data = getData().stream().collect(Collectors.groupingBy(Employee::getDeptId,
+                Collectors.filtering(emp-> emp.getGender().equalsIgnoreCase("Male"), Collectors.toList())));
+        data.entrySet().stream().forEach(entry-> System.out.println(entry.getKey()+"|"+entry.getValue()));
+    }
+
+    public static void mainV3(String[] args) {
+        double sum = getData().stream().filter(emp->emp.getDeptId() == 1)
+                .mapToDouble(Employee::getSalary).sum();
+        System.out.println(sum);
+    }
+
+    public static void mainV5(String[] args) {
+        getData().stream()
+                .filter(dat-> dat.getDeptId() == 1)
+                .max(Comparator.comparingDouble(Employee::getSalary))
+                .ifPresent(System.out::println);
+    }
+
+    public static void mainV8(String[] args) {
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        Map<String, Long> result = numbers.stream()
+                .collect(Collectors.teeing(
+                        Collectors.filtering(n -> n % 2 == 0, Collectors.counting()), // Count evens
+                        Collectors.filtering(n -> n % 2 != 0, Collectors.counting()), // Count odds
+                        (evenCount, oddCount) -> Map.of("Even Count", evenCount, "Odd Count", oddCount)
+                ));
+
+        System.out.println(result);
+    }
+
+    public static void mainV9(String[] args) {
+        String value = "aabbzbccdeffcfzzzz";
+        int [] arr = new int[256];// default value is zero.
+        for(Character ch: value.toCharArray()){
+            arr[ch] = arr[ch] + 1;
+        }
+        int max = arr[0];
+        int idx = 0;
+        for (int index = 0; index< arr.length; index ++){
+            if(arr[index] > max ){
+                max = arr[index];
+                idx = index;
+            }
+        }
+        System.out.println(max +" "+(char)idx);
     }
 
     public static List<Employee> getData() {

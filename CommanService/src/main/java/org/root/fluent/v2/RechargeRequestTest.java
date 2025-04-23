@@ -2,6 +2,7 @@ package org.root.fluent.v2;
 
 public class RechargeRequestTest {
     public static void main(String[] args) {
+     
         RechargeRequest rechargeWithPromoCode = new RechargeRequest
                 .RechargeBuilder()
                 .tapOnMetroIcon()

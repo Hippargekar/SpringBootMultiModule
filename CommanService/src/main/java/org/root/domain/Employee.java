@@ -1,5 +1,6 @@
 package org.root.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.root.enums.Status;
 
@@ -14,6 +15,14 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private Status status;
     private String phone;
+
+//    @JsonIgnore
+//    @Column(name="profilePicBytes")
+//    private byte[] profilePicBytes;
+//
+//    @Transient
+//    private MultipartFile document;
+
     public Long getId() {
         return id;
     }

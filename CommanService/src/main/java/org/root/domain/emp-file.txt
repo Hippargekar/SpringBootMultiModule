@@ -1,0 +1,36 @@
+@RestController
+@RequestMapping("users")
+public class UserController {
+
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/upload/post")
+    public ResponseEntity<String> uploadProfilePic(@ModelAttribute User user) throws Exception {
+        log.debug("Inside {} controller", "/users/upload/post");
+        userService.updateProfilePicture(user.getUserId(), user.getDocument());
+        return new ResponseEntity<>( "Upload Successful", HttpStatus.OK);
+    }
+
+    @GetMapping(value = { "/upload/get" }, produces = MediaType.ALL_VALUE)
+    public ResponseEntity<byte[]> getProfilePic(@RequestParam String emailId)  {
+        log.debug("Inside {} controller", "/users/upload/get");
+        User user = userService.getUserDetailsByEmailId(emailId);
+        byte[] profilePicBytes = user.getProfilePicBytes();
+        return new ResponseEntity<>(profilePicBytes, HttpStatus.OK);
+    }
+
+}
+    public void updateProfilePicture(String userId, MultipartFile multipartFile) throws Exception {
+        User user = userRepository.findByUserId(userId);
+        if(user!= null && multipartFile!=null) {
+            user.setProfilePicBytes(multipartFile.getBytes());
+            userRepository.save(user);
+        } else {
+            log.debug("User not found for userId : {}", userId);
+            throw new Exception("User not found for { userId = " + userId + "}");
+        }
+    }
+
+Path path = Paths.get("uploads/" + file.getOriginalFilename());
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
